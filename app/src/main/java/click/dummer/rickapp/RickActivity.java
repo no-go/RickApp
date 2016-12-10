@@ -23,7 +23,7 @@ import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 
 public class RickActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String PROJECT_LINK = "https://github.com/no-go/RickApp";
+    private static final String PROJECT_LINK = "https://no-go.github.io/RickApp/";
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
     private static final int MS_AFTER_BLURP           = 1000;
