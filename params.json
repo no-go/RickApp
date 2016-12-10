@@ -1,0 +1,6 @@
+{
+  "name": "Rick App",
+  "tagline": "play automatic burp in silent situations",
+  "body": "# Rick App\r\n\r\n**play automatic burp in silent situations**\r\n\r\nThe Rick-App plays a automatic burp in silent situation. This App makes it possible to talk like Rick in *Rick and Morty*.\r\n\r\nSupport me: <a href=\"https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FRickApp\" target=\"_blank\">![Flattr This](https://raw.githubusercontent.com/no-go/RickApp/master/flattr.png)</a>\r\n\r\n[APK File](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the App from [f-Droid](http://f-droid.org)\r\n\r\n## App Icon\r\n\r\n![logo](https://raw.githubusercontent.com/no-go/RickApp/master/app/src/main/res/mipmap-xhdpi/ic_launcher.png)\r\n\r\n## Screenshot\r\n\r\n![Screenshot](https://raw.githubusercontent.com/no-go/RickApp/master/screenshot.jpg)\r\n\r\n## License\r\n\r\nI publish everything under the free BSD-2 License.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
