@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,10 +27,9 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
     private static final int MS_AFTER_BLURP           = 1000;
-    private final static int silenceMustBeeLongerThan = 16;
+    private final static int silenceMustBeeLongerThan = 8;
 
-    public static final String TAG = RickActivity.class.getSimpleName();
-    int frequency = 8000;
+    int frequency = 4000;
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -194,7 +194,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             if (sum < limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) && firstNoise) {
                 silenceTick++;
                 txtLog.append("\n"+getString(R.string.silence));
-                homeView.setBackgroundColor(getColor(R.color.colorAccent));
+                homeView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                 if (silenceTick > silenceMustBeeLongerThan && !mp.isPlaying()) {
                     silenceTick = 0;
                     mp.start();
@@ -202,7 +202,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                     firstNoise = false;
                 }
             } else {
-                homeView.setBackgroundColor(getColor(R.color.colorAccent2));
+                homeView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
                 if (sum > limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) ) {
                     firstNoise = true;
                 }
