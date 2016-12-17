@@ -6,7 +6,7 @@ The Rick-App plays a automatic burp in silent situation. This App makes it possi
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FRickApp" target="_blank">![Flattr This](flattr.png)</a>
 
-[APK File](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the App from [f-Droid](http://f-droid.org)
+[APK File with new, different signature](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the App from [f-Droid](http://f-droid.org)
 
 ## App Icon
 
@@ -16,7 +16,7 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 
 - Threshold ruler: modify the noise limit
 - RickApp plays a burp sound, if there is a realy short time without noise
-- It plays a new burp only after 2 seconds to protect from endless burps
+- It plays a new burp only after 1 seconds to protect from endless burps
 - If your mobile plays sound, RickApp *hears* it, too.
 - RickApp shows the sound sampling values in a textbox
 

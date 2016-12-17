@@ -1,11 +1,10 @@
 package click.dummer.rickapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.Settings;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,13 +26,13 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
     private static final int MS_AFTER_BLURP           = 1000;
-    private final static int silenceMustBeeLongerThan = 7;
+    private final static int silenceMustBeeLongerThan = 16;
 
-    int frequency = 4000;
+    public static final String TAG = RickActivity.class.getSimpleName();
+    int frequency = 8000;
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
-    int blockSize = 128;
     Button startStopButton;
     boolean started = false;
     RecordAudio recordTask;
@@ -43,7 +42,8 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     View homeView;
     MediaPlayer mp;
 
-    int bufferSize;
+    int bufferSize = 128;
+    int sampleRate;
     AudioRecord audioRecord;
     double[] toTransform;
 
@@ -96,14 +96,17 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
 
         limit = sb.getProgress();
         mp = MediaPlayer.create(this, R.raw.blurp);
+        toggleFullscreen();
 
-        bufferSize = AudioRecord.getMinBufferSize(
+        sampleRate = AudioRecord.getMinBufferSize(
                 frequency,
                 channelConfiguration,
-                audioEncoding);
+                audioEncoding
+        );
+
         audioRecord = new AudioRecord(
                 MediaRecorder.AudioSource.DEFAULT, frequency,
-                channelConfiguration, audioEncoding, bufferSize);
+                channelConfiguration, audioEncoding, sampleRate*2);
 
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -115,7 +118,6 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-
     }
 
     @Override
@@ -130,26 +132,46 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             firstNoise = false;
             started = true;
             startStopButton.setText(R.string.stop);
-            toTransform = new double[blockSize];
+            toTransform = new double[bufferSize];
             recordTask = new RecordAudio();
             recordTask.execute();
         }
+    }
+
+    public void toggleFullscreen() {
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+
+        if (Build.VERSION.SDK_INT >= 14) {
+            newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        }
+
+        if (Build.VERSION.SDK_INT >= 16) {
+            newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        }
+
+        if (Build.VERSION.SDK_INT >= 18) {
+            newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                short[] buffer = new short[blockSize];
+                short[] buffer = new short[bufferSize];
+                double[] bufferParameter = new double[1];
                 audioRecord.startRecording();
                 while (started) {
-                    int bufferReadResult = audioRecord.read(buffer, 0, blockSize);
+                    int bufferReadResult = audioRecord.read(buffer, 0, bufferSize);
 
-                    for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
+                    for (int i = 0; i < bufferReadResult; i++) {
                         toTransform[i] = (double) buffer[i] / 32768.0; // signed 16 bit
                     }
-
-                    publishProgress(toTransform);
+                    bufferParameter[0] = bufferReadResult; // :-(
+                    publishProgress(toTransform, bufferParameter);
                 }
                 audioRecord.stop();
             } catch (Throwable t) {
@@ -158,33 +180,20 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             return null;
         }
 
-        protected void onProgressUpdate(double[]... toTransfor) {
+        protected void onProgressUpdate(double[]... toTransfoo) {
             txtLog.setText("");
-            int x1, x2, x3, x4;
-            int c1, c2, c3, c4;
-            int sum = 0;
-            for (int i = 0; i < toTransfor[0].length; i += 8) {
-                x1 = (int) Math.abs(toTransfor[0][i] * 500.0);
-                x2 = (int) Math.abs(toTransfor[0][i + 1] * 500.0);
-                x3 = (int) Math.abs(toTransfor[0][i + 2] * 500.0);
-                x4 = (int) Math.abs(toTransfor[0][i + 3] * 500.0);
-                c1 = (int) Math.abs(toTransfor[0][i + 4] * 500.0);
-                c2 = (int) Math.abs(toTransfor[0][i + 5] * 500.0);
-                c3 = (int) Math.abs(toTransfor[0][i + 6] * 500.0);
-                c4 = (int) Math.abs(toTransfor[0][i + 7] * 500.0);
-                txtLog.append(
-                        String.valueOf(x1) + " " + String.valueOf(x2) + " " +
-                                String.valueOf(x3) + " " + String.valueOf(x4) + " " +
-                                String.valueOf(c1) + " " + String.valueOf(c2) + " " +
-                                String.valueOf(c3) + " " + String.valueOf(c4) + "\n"
-                );
-                sum += x1 + x2 + x3 + x4;
-                sum += c1 + c2 + c3 + c4;
+            int v, sum = 0;
+            for (int i = 0; i < toTransfoo[1][0]; i++) {
+                v = (int) Math.abs(toTransfoo[0][i] * 500.0);
+                if (i%8 == 0) txtLog.append("\n");
+                txtLog.append(String.valueOf(v) + " ");
+                sum += v;
             }
             long nowMilis = System.currentTimeMillis();
+
             if (sum < limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) && firstNoise) {
                 silenceTick++;
-                txtLog.append(getString(R.string.silence));
+                txtLog.append("\n"+getString(R.string.silence));
                 homeView.setBackgroundColor(getColor(R.color.colorAccent));
                 if (silenceTick > silenceMustBeeLongerThan && !mp.isPlaying()) {
                     silenceTick = 0;

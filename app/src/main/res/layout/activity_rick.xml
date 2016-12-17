@@ -5,38 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="click.dummer.rickapp.RickActivity"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/colorAccent2">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txtLog"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/StartStopButton"
-        android:typeface="monospace"
-        android:textAlignment="center"
-        android:textSize="8sp"
-        android:layout_margin="15dp"
-        android:text="@string/analyse"
-        android:elevation="0dp" />
-
-    <Button
-        android:text="@string/start"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/StartStopButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/txtLog"
+        android:typeface="sans"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:textSize="10px"
+        android:rotation="90"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@mipmap/back_img"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
         android:max="10000"
+        android:progress="1000"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/StartStopButton"
-        android:layout_above="@+id/txtLog"
-        android:progress="1000" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/StartStopButton"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/seekBar"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark" />
 </RelativeLayout>
