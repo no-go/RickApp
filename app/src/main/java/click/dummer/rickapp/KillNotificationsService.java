@@ -30,6 +30,6 @@ public class KillNotificationsService extends Service {
     @Override
     public void onCreate() {
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        nm.cancel(App.NOTIFYID);
+        nm.cancelAll();
     }
 }

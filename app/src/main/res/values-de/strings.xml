@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Rick App</string>
     <string name="analyse">Analyse Fenster</string>
-    <string name="silence">STILLE ?</string>
     <string name="projPage">Homepage</string>
     <string name="flattr_this">Mikro-Spende!</string>
     <string name="start">Start</string>

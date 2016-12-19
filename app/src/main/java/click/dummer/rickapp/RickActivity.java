@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,10 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 public class RickActivity extends AppCompatActivity implements View.OnClickListener {
     private String FLATTR_LINK;
@@ -47,10 +50,12 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     int limit;
     int silenceTick;
     View homeView;
-    MediaPlayer mp;
+    MediaPlayer mp[];
+    int burps = 5;
+    int lastBurp;
 
-    int bufferSize = 128;
-    int sampleRate;
+    int analyseSize = 128;
+    int bufferSize;
     AudioRecord audioRecord;
     double[] toTransform;
 
@@ -102,7 +107,14 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         SeekBar sb = (SeekBar) findViewById(R.id.seekBar);
 
         limit = sb.getProgress();
-        mp = MediaPlayer.create(this, R.raw.blurp);
+        lastBurp = 0;
+        mp = new MediaPlayer[burps];
+        mp[0] = MediaPlayer.create(this, R.raw.blurp1);
+        mp[1] = MediaPlayer.create(this, R.raw.blurp1);
+        mp[2] = MediaPlayer.create(this, R.raw.blurp1);
+        mp[3] = MediaPlayer.create(this, R.raw.blurp1);
+        mp[4] = MediaPlayer.create(this, R.raw.blurp1);
+
         toggleFullscreen();
 
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -116,6 +128,31 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+        bufferSize = AudioRecord.getMinBufferSize(
+                frequency,
+                channelConfiguration,
+                audioEncoding
+        );
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (bufferSize < (512 * 1024)) bufferSize = 512 * 1024;
+        }
+
+        audioRecord = new AudioRecord(
+                MediaRecorder.AudioSource.MIC,
+                frequency,
+                channelConfiguration,
+                audioEncoding,
+                bufferSize
+        );
+
+        if(audioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
+            Log.e(App.TAG, "Audio: INITIALIZATION ERROR");
+            Toast.makeText(this, "Audio: INITIALIZATION ERROR", Toast.LENGTH_LONG).show();
+            audioRecord.release();
+            audioRecord = null;
+        }
+
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancelAll();
     }
@@ -123,7 +160,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onNewIntent(Intent i) {
         super.onNewIntent(i);
-        Log.i("Intent", i.getAction());
+        Log.i(App.TAG, "Intent " + i.getAction());
         if (i.getAction().equals("Stop")) {
             stopRick();
             controlNotify();
@@ -151,21 +188,12 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void startRick() {
-        sampleRate = AudioRecord.getMinBufferSize(
-                frequency,
-                channelConfiguration,
-                audioEncoding
-        );
-        audioRecord = new AudioRecord(
-                MediaRecorder.AudioSource.DEFAULT, frequency,
-                channelConfiguration, audioEncoding, sampleRate*4);
-
         startTimeMs = System.currentTimeMillis();
         silenceTick = 0;
         firstNoise = false;
         started = true;
         startStopButton.setText(R.string.stop);
-        toTransform = new double[bufferSize];
+        toTransform = new double[analyseSize];
         recordTask = new RecordAudio();
         recordTask.execute();
     }
@@ -177,8 +205,9 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void controlNotify() {
-        ServiceConnection mConnection = new ServiceConnection() {
+    if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)) return;
 
+        ServiceConnection mConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 ((KillNotificationsService.KillBinder) iBinder).service.startService(new Intent(
@@ -192,9 +221,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
 
                 mBuilder.setTicker(getString(R.string.underControl));
                 mBuilder.setContentTitle(getString(R.string.app_name));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
-                }
+                mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
                 mBuilder.setContentText(getString(R.string.underControl));
                 mBuilder.setStyle(bigStyle);
                 mBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -210,20 +237,16 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                             RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
                     );
                     mBuilder.addAction(android.R.drawable.ic_media_pause, getString(R.string.stop), piP);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
-                        mBuilder.setProgress(1000, 5, true);
-                    }
+                    mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
+                    mBuilder.setProgress(1000, 5, true);
                 } else {
                     intent2.setAction("Start");
                     PendingIntent piP = PendingIntent.getActivity(
                             RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
                     );
                     mBuilder.addAction(android.R.drawable.ic_media_play, getString(R.string.start), piP);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
-                        mBuilder.setProgress(1000, 300, false);
-                    }
+                    mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
+                    mBuilder.setProgress(1000, 300, false);
                 }
                 NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 Notification noti = mBuilder.build();
@@ -264,14 +287,17 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {
+        String text = "";
+
         @Override
         protected Void doInBackground(Void... params) {
+            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_MORE_FAVORABLE);
             try {
-                short[] buffer = new short[bufferSize];
+                short[] buffer = new short[analyseSize];
                 double[] bufferParameter = new double[1];
                 audioRecord.startRecording();
                 while (started) {
-                    int bufferReadResult = audioRecord.read(buffer, 0, bufferSize);
+                    int bufferReadResult = audioRecord.read(buffer, 0, analyseSize);
 
                     for (int i = 0; i < bufferReadResult; i++) {
                         toTransform[i] = (double) buffer[i] / 32768.0; // signed 16 bit
@@ -287,28 +313,31 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         protected void onProgressUpdate(double[]... toTransfoo) {
-            txtLog.setText("");
+            text = "";
             int v, sum = 0;
             for (int i = 0; i < toTransfoo[1][0]; i++) {
                 v = (int) Math.abs(toTransfoo[0][i] * 500.0);
-                if (i%8 == 0) txtLog.append("\n");
-                txtLog.append(String.valueOf(v) + " ");
+                if (i%8 == 0) text += "\n";
+                text += String.valueOf(v) + " ";
                 sum += v;
             }
+            txtLog.setText(text);
             long nowMilis = System.currentTimeMillis();
 
             if (sum < limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) && firstNoise) {
                 silenceTick++;
-                txtLog.append("\n"+getString(R.string.silence));
-                homeView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                if (silenceTick > silenceMustBeeLongerThan && !mp.isPlaying()) {
+                startStopButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                if (silenceTick > silenceMustBeeLongerThan && !mp[lastBurp].isPlaying()) {
                     silenceTick = 0;
-                    mp.start();
+                    Random r = new Random();
+                    int rnd = r.nextInt(mp.length);
+                    lastBurp = rnd;
+                    mp[rnd].start();
                     startTimeMs = System.currentTimeMillis();
                     firstNoise = false;
                 }
             } else {
-                homeView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
+                startStopButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
                 if (sum > limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) ) {
                     firstNoise = true;
                 }

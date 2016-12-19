@@ -4,7 +4,6 @@
     <string name="projPage">Homepage</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
-    <string name="silence">SILENCE ?</string>
     <string name="analyse">analyse window</string>
     <string name="underControl">control me!</string>
 </resources>
