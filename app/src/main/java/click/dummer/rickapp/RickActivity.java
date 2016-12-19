@@ -1,10 +1,19 @@
 package click.dummer.rickapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,13 +32,11 @@ import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 
 public class RickActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String PROJECT_LINK = "https://no-go.github.io/RickApp/";
-    private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
-    private static final int MS_AFTER_BLURP           = 1000;
-    private final static int silenceMustBeeLongerThan = 8;
 
-    int frequency = 4000;
+    private static final int MS_AFTER_BLURP           = 1000;
+    private final static int silenceMustBeeLongerThan = 16;
+    int frequency = 8000;
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -53,8 +60,8 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
-            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
-                java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
+            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+App.FLATTR_ID+"&url="+
+                java.net.URLEncoder.encode(App.PROJECT_LINK, "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -70,7 +77,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intentFlattr);
                 break;
             case R.id.action_project:
-                Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
+                Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(App.PROJECT_LINK));
                 startActivity(intentProj);
                 break;
             default:
@@ -98,16 +105,6 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         mp = MediaPlayer.create(this, R.raw.blurp);
         toggleFullscreen();
 
-        sampleRate = AudioRecord.getMinBufferSize(
-                frequency,
-                channelConfiguration,
-                audioEncoding
-        );
-
-        audioRecord = new AudioRecord(
-                MediaRecorder.AudioSource.DEFAULT, frequency,
-                channelConfiguration, audioEncoding, sampleRate*2);
-
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -118,24 +115,133 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
+    }
+
+    @Override
+    protected void onNewIntent(Intent i) {
+        super.onNewIntent(i);
+        Log.i("Intent", i.getAction());
+        if (i.getAction().equals("Stop")) {
+            stopRick();
+            controlNotify();
+        } else if (i.getAction().equals("Start")) {
+            startRick();
+            controlNotify();
+        }
     }
 
     @Override
     public void onClick(View view) {
         if (started) {
-            started = false;
-            startStopButton.setText(R.string.start);
-            recordTask.cancel(true);
+            stopRick();
         } else {
-            startTimeMs = System.currentTimeMillis();
-            silenceTick = 0;
-            firstNoise = false;
-            started = true;
-            startStopButton.setText(R.string.stop);
-            toTransform = new double[bufferSize];
-            recordTask = new RecordAudio();
-            recordTask.execute();
+            startRick();
         }
+        controlNotify();
+    }
+
+    @Override
+    public void onBackPressed() {
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    void startRick() {
+        sampleRate = AudioRecord.getMinBufferSize(
+                frequency,
+                channelConfiguration,
+                audioEncoding
+        );
+        audioRecord = new AudioRecord(
+                MediaRecorder.AudioSource.DEFAULT, frequency,
+                channelConfiguration, audioEncoding, sampleRate*4);
+
+        startTimeMs = System.currentTimeMillis();
+        silenceTick = 0;
+        firstNoise = false;
+        started = true;
+        startStopButton.setText(R.string.stop);
+        toTransform = new double[bufferSize];
+        recordTask = new RecordAudio();
+        recordTask.execute();
+    }
+
+    void stopRick() {
+        started = false;
+        startStopButton.setText(R.string.start);
+        if (recordTask != null) recordTask.cancel(true);
+    }
+
+    void controlNotify() {
+        ServiceConnection mConnection = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                ((KillNotificationsService.KillBinder) iBinder).service.startService(new Intent(
+                        RickActivity.this, KillNotificationsService.class));
+
+                // ===================================================================
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(RickActivity.this);
+                NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
+                bigStyle.bigText(getString(R.string.underControl));
+
+                mBuilder.setTicker(getString(R.string.underControl));
+                mBuilder.setContentTitle(getString(R.string.app_name));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
+                }
+                mBuilder.setContentText(getString(R.string.underControl));
+                mBuilder.setStyle(bigStyle);
+                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                Intent intent2 = new Intent(
+                        RickActivity.this,
+                        RickActivity.class
+                );
+                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                if (started) {
+                    intent2.setAction("Stop");
+                    PendingIntent piP = PendingIntent.getActivity(
+                            RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
+                    );
+                    mBuilder.addAction(android.R.drawable.ic_media_pause, getString(R.string.stop), piP);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
+                        mBuilder.setProgress(1000, 5, true);
+                    }
+                } else {
+                    intent2.setAction("Start");
+                    PendingIntent piP = PendingIntent.getActivity(
+                            RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
+                    );
+                    mBuilder.addAction(android.R.drawable.ic_media_play, getString(R.string.start), piP);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
+                        mBuilder.setProgress(1000, 300, false);
+                    }
+                }
+                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification noti = mBuilder.build();
+                // noti.flags |= Notification.FLAG_NO_CLEAR;
+                nm.notify(App.NOTIFYID, noti);
+
+                // =============================================================
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {}
+        };
+
+        bindService(
+                new Intent(RickActivity.this, KillNotificationsService.class),
+                mConnection,
+                Context.BIND_AUTO_CREATE
+        );
     }
 
     public void toggleFullscreen() {
