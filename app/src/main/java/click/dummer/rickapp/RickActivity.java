@@ -3,6 +3,7 @@ package click.dummer.rickapp;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,8 +38,8 @@ import java.util.Random;
 public class RickActivity extends AppCompatActivity implements View.OnClickListener {
     private String FLATTR_LINK;
 
-    private static final int MS_AFTER_BLURP           = 1000;
-    private final static int silenceMustBeeLongerThan = 16;
+    private static final int MS_AFTER_BLURP           = 2000;
+    private final static int silenceMustBeeLongerThan = 20;
     int frequency = 8000;
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
@@ -51,7 +52,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     int silenceTick;
     View homeView;
     MediaPlayer mp[];
-    int burps = 5;
+    int burps = 6;
     int lastBurp;
 
     int analyseSize = 128;
@@ -110,10 +111,11 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         lastBurp = 0;
         mp = new MediaPlayer[burps];
         mp[0] = MediaPlayer.create(this, R.raw.blurp1);
-        mp[1] = MediaPlayer.create(this, R.raw.blurp1);
-        mp[2] = MediaPlayer.create(this, R.raw.blurp1);
-        mp[3] = MediaPlayer.create(this, R.raw.blurp1);
-        mp[4] = MediaPlayer.create(this, R.raw.blurp1);
+        mp[1] = MediaPlayer.create(this, R.raw.blurp2);
+        mp[2] = MediaPlayer.create(this, R.raw.blurp3);
+        mp[3] = MediaPlayer.create(this, R.raw.blurp4);
+        mp[4] = MediaPlayer.create(this, R.raw.blurp5);
+        mp[5] = MediaPlayer.create(this, R.raw.blurp6);
 
         toggleFullscreen();
 
@@ -161,10 +163,10 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     protected void onNewIntent(Intent i) {
         super.onNewIntent(i);
         Log.i(App.TAG, "Intent " + i.getAction());
-        if (i.getAction().equals("Stop")) {
+        if (i.getAction().equals(App.TAG + "Stop")) {
             stopRick();
             controlNotify();
-        } else if (i.getAction().equals("Start")) {
+        } else if (i.getAction().equals(App.TAG + "Start")) {
             startRick();
             controlNotify();
         }
@@ -232,7 +234,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                 );
                 intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 if (started) {
-                    intent2.setAction("Stop");
+                    intent2.setAction(App.TAG + "Stop");
                     PendingIntent piP = PendingIntent.getActivity(
                             RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
                     );
@@ -240,7 +242,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                     mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
                     mBuilder.setProgress(1000, 5, true);
                 } else {
-                    intent2.setAction("Start");
+                    intent2.setAction(App.TAG + "Start");
                     PendingIntent piP = PendingIntent.getActivity(
                             RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
                     );

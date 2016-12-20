@@ -1,6 +1,5 @@
 package click.dummer.rickapp;
 
-
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
@@ -13,7 +12,6 @@ public class KillNotificationsService extends Service {
 
     public class KillBinder extends Binder {
         public final Service service;
-
         public KillBinder(Service service) {
             this.service = service;
         }
@@ -23,6 +21,7 @@ public class KillNotificationsService extends Service {
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return Service.START_STICKY;
