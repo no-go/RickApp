@@ -52,8 +52,10 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     int silenceTick;
     View homeView;
     MediaPlayer mp[];
+    MediaPlayer petti[];
     int burps = 6;
     int lastBurp;
+    boolean isPetty;
 
     int analyseSize = 128;
     int bufferSize;
@@ -86,6 +88,15 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(App.PROJECT_LINK));
                 startActivity(intentProj);
                 break;
+            case R.id.action_petty:
+                if (item.isChecked()) {
+                    isPetty = false;
+                    item.setChecked(false);
+                } else {
+                    isPetty = true;
+                    item.setChecked(true);
+                }
+                break;
             default:
                 return false;
         }
@@ -97,6 +108,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rick);
         homeView = findViewById(R.id.activity_rick);
+        isPetty = false;
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -116,6 +128,13 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         mp[3] = MediaPlayer.create(this, R.raw.blurp4);
         mp[4] = MediaPlayer.create(this, R.raw.blurp5);
         mp[5] = MediaPlayer.create(this, R.raw.blurp6);
+        petti = new MediaPlayer[burps];
+        petti[0] = MediaPlayer.create(this, R.raw.petti1);
+        petti[1] = MediaPlayer.create(this, R.raw.petti2);
+        petti[2] = MediaPlayer.create(this, R.raw.petti3);
+        petti[3] = MediaPlayer.create(this, R.raw.petti4);
+        petti[4] = MediaPlayer.create(this, R.raw.petti5);
+        petti[5] = MediaPlayer.create(this, R.raw.petti6);
 
         toggleFullscreen();
 
@@ -329,12 +348,20 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
             if (sum < limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) && firstNoise) {
                 silenceTick++;
                 startStopButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                if (silenceTick > silenceMustBeeLongerThan && !mp[lastBurp].isPlaying()) {
+                if (
+                        silenceTick > silenceMustBeeLongerThan &&
+                        !mp[lastBurp].isPlaying() &&
+                        !petti[lastBurp].isPlaying()
+                ) {
                     silenceTick = 0;
                     Random r = new Random();
                     int rnd = r.nextInt(mp.length);
                     lastBurp = rnd;
-                    mp[rnd].start();
+                    if (isPetty) {
+                        petti[rnd].start();
+                    } else {
+                        mp[rnd].start();
+                    }
                     startTimeMs = System.currentTimeMillis();
                     firstNoise = false;
                 }
