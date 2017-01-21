@@ -6,7 +6,7 @@ The Rick-click.dummer.rickapp.App plays a automatic burp in silent situation. Th
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FRickApp" target="_blank">![Flattr This](screenshots/flattr.png)</a>
 
-[APK File with new, different signature](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the Rick App from [f-Droid](http://f-droid.org) or google play.
+[APK File with new, different signature](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the Rick App from [f-Droid](https://f-droid.org/repository/browse/?fdid=click.dummer.rickapp) or [google play](https://play.google.com/store/apps/details?id=click.dummer.rickapp).
 
 ## Rick App Icon
 
