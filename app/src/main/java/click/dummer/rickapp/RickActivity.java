@@ -1,21 +1,13 @@
 package click.dummer.rickapp;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.IBinder;
 import android.os.Process;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -136,8 +128,6 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         petti[4] = MediaPlayer.create(this, R.raw.petti5);
         petti[5] = MediaPlayer.create(this, R.raw.petti6);
 
-        toggleFullscreen();
-
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -179,26 +169,12 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onNewIntent(Intent i) {
-        super.onNewIntent(i);
-        Log.i(App.TAG, "Intent " + i.getAction());
-        if (i.getAction().equals(App.TAG + "Stop")) {
-            stopRick();
-            controlNotify();
-        } else if (i.getAction().equals(App.TAG + "Start")) {
-            startRick();
-            controlNotify();
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         if (started) {
             stopRick();
         } else {
             startRick();
         }
-        controlNotify();
     }
 
     @Override
@@ -223,88 +199,6 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
         started = false;
         startStopButton.setText(R.string.start);
         if (recordTask != null) recordTask.cancel(true);
-    }
-
-    void controlNotify() {
-    if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)) return;
-
-        ServiceConnection mConnection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                ((KillNotificationsService.KillBinder) iBinder).service.startService(new Intent(
-                        RickActivity.this, KillNotificationsService.class));
-
-                // ===================================================================
-
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(RickActivity.this);
-                NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
-                bigStyle.bigText(getString(R.string.underControl));
-
-                mBuilder.setTicker(getString(R.string.underControl));
-                mBuilder.setContentTitle(getString(R.string.app_name));
-                mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
-                mBuilder.setContentText(getString(R.string.underControl));
-                mBuilder.setStyle(bigStyle);
-                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-                mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                Intent intent2 = new Intent(
-                        RickActivity.this,
-                        RickActivity.class
-                );
-                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                if (started) {
-                    intent2.setAction(App.TAG + "Stop");
-                    PendingIntent piP = PendingIntent.getActivity(
-                            RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
-                    );
-                    mBuilder.addAction(android.R.drawable.ic_media_pause, getString(R.string.stop), piP);
-                    mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
-                    mBuilder.setProgress(1000, 5, true);
-                } else {
-                    intent2.setAction(App.TAG + "Start");
-                    PendingIntent piP = PendingIntent.getActivity(
-                            RickActivity.this, 0, intent2, PendingIntent.FLAG_CANCEL_CURRENT
-                    );
-                    mBuilder.addAction(android.R.drawable.ic_media_play, getString(R.string.start), piP);
-                    mBuilder.setCategory(Notification.CATEGORY_PROGRESS);
-                    mBuilder.setProgress(1000, 300, false);
-                }
-                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                Notification noti = mBuilder.build();
-                // noti.flags |= Notification.FLAG_NO_CLEAR;
-                nm.notify(App.NOTIFYID, noti);
-
-                // =============================================================
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {}
-        };
-
-        bindService(
-                new Intent(RickActivity.this, KillNotificationsService.class),
-                mConnection,
-                Context.BIND_AUTO_CREATE
-        );
-    }
-
-    public void toggleFullscreen() {
-        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
-        int newUiOptions = uiOptions;
-
-        if (Build.VERSION.SDK_INT >= 14) {
-            newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        }
-
-        if (Build.VERSION.SDK_INT >= 16) {
-            newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-        }
-
-        if (Build.VERSION.SDK_INT >= 18) {
-            newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        }
-
-        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "click.dummer.rickapp"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 22
         versionCode 14
         versionName "1.4"
