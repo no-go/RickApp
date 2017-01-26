@@ -8,6 +8,10 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 
 [APK File with new, different signature](https://raw.githubusercontent.com/no-go/RickApp/master/app/app-release.apk) or get the Rick App from [f-Droid](https://f-droid.org/repository/browse/?fdid=click.dummer.rickapp) or [google play](https://play.google.com/store/apps/details?id=click.dummer.rickapp).
 
+## Android 4.0
+
+If you have a older Android Version (below 4.4.4), try this apk (not tested): [RickApp Android 4.0 and above](https://raw.githubusercontent.com/no-go/RickApp/and404/app/app-release.apk)
+
 ## Rick App Icon
 
 ![logo](app/src/main/res/mipmap-xhdpi/ic_launcher.png)
