@@ -244,7 +244,7 @@ public class RickActivity extends AppCompatActivity implements View.OnClickListe
                 mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
                 mBuilder.setContentText(getString(R.string.underControl));
                 mBuilder.setStyle(bigStyle);
-                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                mBuilder.setSmallIcon(R.mipmap.sw_logo);
                 mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
                 Intent intent2 = new Intent(
                         RickActivity.this,
