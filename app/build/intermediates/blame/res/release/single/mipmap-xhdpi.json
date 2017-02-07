@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/release/mipmap-xhdpi/ic_launcher.png",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/release/mipmap-xhdpi/back_img.png",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/src/main/res/mipmap-xhdpi/back_img.png"
+    },
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/release/mipmap-xhdpi/sw_logo.png",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/src/main/res/mipmap-xhdpi/sw_logo.png"
+    }
+]

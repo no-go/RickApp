@@ -1,0 +1,4 @@
+#Fri Jan 27 20:00:56 CET 2017
+base.0=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/release/folders/1000/1f/main
+renamed.0=classes.dex
+file.0=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/release/folders/1000/1f/main/classes.dex

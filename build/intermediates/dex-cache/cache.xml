@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/support-annotations-25.0.1_1c807dcdb7e33f6052ff56bb131d920a7a9d8596.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.0.1_1c807dcdb7e33f6052ff56bb131d920a7a9d8596/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_154c2108de917d3ace9f3b2f6b611421f859df87/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-25.0.1_9796e8d55d38a7f6fa0d6a0a45fbc71847f57f6c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3325a58d1fa82d648b78e4adebccc7ae2c463645">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_58b487d5c1e21c4af8e7074399a8524f24187a42/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.0.1_4f4b4c80f6f7c83893cb56a3b3c3e44ccb483dd4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.0.1_9796e8d55d38a7f6fa0d6a0a45fbc71847f57f6c/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/internal_impl-25.0.1_154c2108de917d3ace9f3b2f6b611421f859df87.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-25.0.1_4f4b4c80f6f7c83893cb56a3b3c3e44ccb483dd4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-animated-vector-drawable-25.0.1_b9e71ac5bd5a33a2cfd2dea452c70d808f5db943.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.0.1_77954e2cdd6f4ae66ce4d0724ed6a820b283e78e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.0.1_b9e71ac5bd5a33a2cfd2dea452c70d808f5db943/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-vector-drawable-25.0.1_77954e2cdd6f4ae66ce4d0724ed6a820b283e78e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/internal_impl-25.0.1_3d5397f995cb7b48ce91ca6aa0b251e2b12d5e06.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.0.1_d1aaa649eb494f8935b36e5d1eeba097b0a97f35/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_2a48f370c9067c61a54d381491a4e7d9e542efda/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-fragment-25.0.1_3f069d2da70e6ae945c1521f3e945295193f147c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/internal_impl-25.0.1_2a48f370c9067c61a54d381491a4e7d9e542efda.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-compat-25.0.1_d1aaa649eb494f8935b36e5d1eeba097b0a97f35.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.0.1_3f069d2da70e6ae945c1521f3e945295193f147c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_3d5397f995cb7b48ce91ca6aa0b251e2b12d5e06/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.0.1_43042c43c7627aecf67792cf61cff8d834f383ee/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-core-utils-25.0.1_43042c43c7627aecf67792cf61cff8d834f383ee.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_f400c07e8f13994e096ccc85412b830f35cf22c4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_ec977a3931fbe85f851954a414be6aefa83efec6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.0.1_b1bf06b3d1e506c07202406a1198d8a8fe61e88b/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/internal_impl-25.0.1_ec977a3931fbe85f851954a414be6aefa83efec6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-core-ui-25.0.1_94cea35b992f1c5757bf24990be031dd97e1852a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="da29323fceeb0fca755677bbb474f2695aa5a698">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_b2c5d1a05a76d07d28eb5ac4c000c236a57f9771/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/internal_impl-25.0.1_f400c07e8f13994e096ccc85412b830f35cf22c4.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.0.1_94cea35b992f1c5757bf24990be031dd97e1852a/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/unknwon/Android/Projects/RickApp/app/build/intermediates/pre-dexed/release/com.android.support-support-media-compat-25.0.1_b1bf06b3d1e506c07202406a1198d8a8fe61e88b.jar" />
+    </item>
+
+</items>

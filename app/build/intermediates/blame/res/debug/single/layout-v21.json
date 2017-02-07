@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/home/unknwon/Android/Projects/RickApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout-v21/notification_template_custom_big.xml"
+    }
+]
