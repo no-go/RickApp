@@ -1,7 +1,0 @@
-#Fri Jan 27 19:58:11 CET 2017
-base.0=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_58b487d5c1e21c4af8e7074399a8524f24187a42
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_b2c5d1a05a76d07d28eb5ac4c000c236a57f9771/classes.dex
-base.1=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_b2c5d1a05a76d07d28eb5ac4c000c236a57f9771
-file.0=/home/unknwon/Android/Projects/RickApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_58b487d5c1e21c4af8e7074399a8524f24187a42/classes.dex
