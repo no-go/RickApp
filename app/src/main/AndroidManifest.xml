@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="click.dummer.notburpapp">
+    package="click.dummer.emobread">
 
-    <uses-sdk android:minSdkVersion="14" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -10,10 +9,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name="click.dummer.notburpapp.App"
+        android:name="click.dummer.emobread.App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="click.dummer.notburpapp.MainActivity" android:screenOrientation="locked">
+        <activity android:name="click.dummer.emobread.MainActivity" android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

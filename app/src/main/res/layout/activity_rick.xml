@@ -4,44 +4,68 @@
     android:id="@+id/activity_rick"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="click.dummer.notburpapp.MainActivity"
-    android:padding="10dp">
+    android:background="@color/colorPrimary"
+    android:padding="10dp"
+    tools:context="click.dummer.emobread.MainActivity">
 
     <TextView
+        android:id="@+id/txtLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtLog"
-        android:typeface="sans"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="10px"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@mipmap/back_img"
-        android:rotation="90" />
+        android:gravity="center_vertical|center_horizontal"
+        android:rotation="90"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <SeekBar
+        android:id="@+id/seekBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:max="10000"
-        android:progress="1000"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:max="10000"
+        android:paddingTop="80dp"
+        android:progress="1000" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/seekBar"
+        android:text="@string/sensitiv"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/seekBar"
+        android:text="@string/hardly"
+        android:textColor="@android:color/background_light" />
 
-    <Button
-        android:text="@string/start"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/StartStopButton"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/seekBar"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimaryDark" />
+        android:paddingTop="40dp"
+        android:text="@string/barTitle"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     defaultConfig {
-        applicationId "click.dummer.notburpapp"
+        applicationId "click.dummer.emobread"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 171

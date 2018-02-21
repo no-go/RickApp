@@ -1,21 +1,15 @@
-package click.dummer.notburpapp;
+package click.dummer.emobread;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Process;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -24,20 +18,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private String FLATTR_LINK;
+public class MainActivity extends AppCompatActivity {
 
     private static final int MS_AFTER_BLURP           = 3500;
-    private final static int silenceMustBeeLongerThan = 33;
+    private final static int silenceMustBeeLongerThan = 40;
     int frequency = 8000;
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
-    Button startStopButton;
-    boolean started = false;
     RecordAudio recordTask;
     TextView txtLog;
     int limit;
@@ -56,35 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean firstNoise;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        try {
-            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+App.FLATTR_ID+"&url="+
-                java.net.URLEncoder.encode(App.PROJECT_LINK, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_flattr:
-                Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
-                startActivity(intentFlattr);
-                break;
-            case R.id.action_project:
-                Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(App.PROJECT_LINK));
-                startActivity(intentProj);
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rick);
@@ -93,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+            getSupportActionBar().setTitle(" "+getString(R.string.app_name));
+            getSupportActionBar().setElevation(0);
         }
-        startStopButton = (Button) findViewById(R.id.StartStopButton);
+
         txtLog = (TextView) findViewById(R.id.txtLog);
-        startStopButton.setOnClickListener(this);
         SeekBar sb = (SeekBar) findViewById(R.id.seekBar);
 
         limit = sb.getProgress();
@@ -171,15 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancelAll();
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (started) {
-            stopRick();
-        } else {
-            startRick();
-        }
+        startRick();
     }
 
     @Override
@@ -193,16 +147,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startTimeMs = System.currentTimeMillis();
         silenceTick = 0;
         firstNoise = false;
-        started = true;
-        startStopButton.setText(R.string.stop);
         toTransform = new double[analyseSize];
         recordTask = new RecordAudio();
         recordTask.execute();
     }
 
     void stopRick() {
-        started = false;
-        startStopButton.setText(R.string.start);
         if (recordTask != null) recordTask.cancel(true);
     }
 
@@ -216,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 short[] buffer = new short[analyseSize];
                 double[] bufferParameter = new double[1];
                 audioRecord.startRecording();
-                while (started) {
+                while (true) {
                     int bufferReadResult = audioRecord.read(buffer, 0, analyseSize);
 
                     for (int i = 0; i < bufferReadResult; i++) {
@@ -225,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     bufferParameter[0] = bufferReadResult; // :-(
                     publishProgress(toTransform, bufferParameter);
                 }
-                audioRecord.stop();
             } catch (Throwable t) {
                 Log.e("AudioRecord", "Recording Failed");
             }
@@ -246,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (sum < limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) && firstNoise) {
                 silenceTick++;
-                startStopButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                 if (
                         silenceTick > silenceMustBeeLongerThan &&
                         !mp[lastBurp].isPlaying()
@@ -260,7 +208,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     firstNoise = false;
                 }
             } else {
-                startStopButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
                 if (sum > limit && (nowMilis-startTimeMs > MS_AFTER_BLURP) ) {
                     firstNoise = true;
                 }
