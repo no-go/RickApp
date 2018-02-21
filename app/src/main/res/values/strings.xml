@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">Rick App</string>
+    <string name="app_name">Not Burp App</string>
     <string name="flattr_this">Micro-Donate !</string>
     <string name="projPage">Homepage</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
-    <string name="petty">pettifogging</string>
     <string name="analyse">analyse window</string>
     <string name="underControl">control me!</string>
 </resources>

@@ -2,13 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
     defaultConfig {
-        applicationId "click.dummer.rickapp"
+        applicationId "click.dummer.notburpapp"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 17
-        versionName "1.7"
+        versionCode 171
+        versionName "1.71"
     }
     buildTypes {
         release {
